@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>测谎仪OL</title>
+        <style>
+            #btnContainer { margin: 20px; }
+            #btnContainer button { margin-right: 8px; padding: 8px 12px; font-size: 16px; }
+            .image-container {
+                width: 50%;
+                height: 88.8%;
+                background-image: url('Truth.png');
+                background-size: cover;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // reuse existing <audio> in body if present, otherwise create one
+                var audio1 = document.querySelector('audio');
+                audio1.id = 'audio1';
+                audio1.src = 'Truth.mp3';
+                audio1.preload = 'auto';
+                document.body.appendChild(audio1);
+
+                var audio2 = document.createElement('audio');
+                audio2.id = 'audio2';
+                audio2.src = 'Lie.mp3';
+                audio2.preload = 'auto';
+                document.body.appendChild(audio2);
+
+                var container = document.createElement('div');
+                container.id = 'btnContainer';
+
+                var btnTruth = document.createElement('button');
+                btnTruth.type = 'button';
+                btnTruth.textContent = 'Truth!';
+                btnTruth.addEventListener('click', function () {
+                    audio2.pause();
+                    audio2.currentTime = 0;
+                    audio1.play();
+                    document.getElementById('background-container').style.backgroundImage = `url('Truth.png')`;
+                });
+
+                var btnLie = document.createElement('button');
+                btnLie.type = 'button';
+                btnLie.textContent = 'Lie!';
+                btnLie.addEventListener('click', function () {
+                    audio1.pause();
+                    audio1.currentTime = 0;
+                    document.getElementById('background-container').style.backgroundImage = `url('Lie.png')`;
+                    audio2.play();
+                });
+
+                container.appendChild(btnTruth);
+                container.appendChild(btnLie);
+
+                // insert buttons at top of body
+                document.body.insertBefore(container, document.body.firstChild);
+            });
+        </script>
+    </head>
+
+    <body>
+            <div class="image-container" id="background-container"></div>
+            <audio></audio>
+    </body>
+
+</html>
